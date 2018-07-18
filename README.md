@@ -62,7 +62,6 @@ Create a [Watson Visual Recognition](https://console.bluemix.net/catalog/service
 ### 3. Create Cloud Functions
 
 Make sure you have the right environment variables in the `local.env` file. Export them in your terminal then deploy the Cloud Functions using `wskdeploy`:
-> You need to be logged in with `ibmcloud` or `ic` cli
 
 ```
 $ source local.env
@@ -89,6 +88,8 @@ $ npm start
 * _(or) Double-click `web/index.html`_
 
 # Sample output
+
+![sample-output](docs/screenshot.png)
 
 # Links
 
