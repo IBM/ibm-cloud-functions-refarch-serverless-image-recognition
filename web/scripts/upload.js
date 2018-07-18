@@ -1,9 +1,8 @@
 let uplaodButton = document.getElementById("uploadImage");
 let selectImage = document.getElementById("selectImage");
 let form = document.forms['upload'];
-let stringCloudantURL = "https://:@"
-let imageDatabase = "newimages"
-let tagsDatabase = "processed"
+let imageDatabase = "images"
+let tagsDatabase = "tags"
 let uploadedImages = document.getElementById("uploadedImages");
 
 let usernameCloudant = "d1dda683-a71d-43ca-9c92-bf111700dc00-bluemix"
