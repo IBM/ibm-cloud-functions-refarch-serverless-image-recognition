@@ -14,7 +14,7 @@
 #   CLOUDANT_USERNAME
 #   CLOUDANT_PASSWORD
 #   WATSON_VISUAL_APIKEY
-
+---
 packages:
   serverless-image-recognition:
     dependencies:
@@ -26,8 +26,8 @@ packages:
           password: $CLOUDANT_PASSWORD
           host: ${CLOUDANT_USERNAME}.cloudant.com
     actions:
-        # Action named "update-document-with-watson"
-        # Creating action as a regular Node.js action
+      # Action named "update-document-with-watson"
+      # Creating action as a regular Node.js action
       update-document-with-watson:
         function: actions/updateDocumentWithWatson.js
         runtime: nodejs:8
@@ -38,14 +38,14 @@ packages:
           DBNAME_PROCESSED: $CLOUDANT_TAGS_DATABASE
           WATSON_VR_APIKEY: $WATSON_VISUAL_APIKEY
     triggers:
-        # Creating the update-trigger trigger"
+      # Creating the update-trigger trigger"
       update-trigger:
         feed: serverless-pattern-cloudant-package/changes
         inputs:
           dbname: $CLOUDANT_IMAGE_DATABASE
     rules:
-        # Rule named "update-trigger-rule"
-        # Creating the rule that links the trigger to the sequence
+      # Rule named "update-trigger-rule"
+      # Creating the rule that links the trigger to the sequence
       update-trigger-rule:
         trigger: update-trigger
         action: update-document-with-watson
