@@ -11,6 +11,10 @@
   max-width: 300px;
 }
 
+.imageHolder {
+  text-align: center;
+}
+
 .imageSection {
   padding: 25px;
   margin-right: 25px;
