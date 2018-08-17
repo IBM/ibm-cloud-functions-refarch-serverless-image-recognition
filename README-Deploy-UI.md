@@ -1,7 +1,6 @@
 # Deploy through the IBM Cloud Functions console user interface
 
-* Create a Trigger
-Click on `Create Trigger` then choose `Cloudant`. At the **Cloudant Instance** section, choose to "Input your own credentials". Enter your Cloudant's **Username**, **Password**, **Host**. Enter `images` as your **Database** if you have created that name of the database at the previous step. Name the Trigger "update-trigger".
+* Click on `Create Trigger` then choose `Cloudant`. At the **Cloudant Instance** section, choose to "Input your own credentials". Enter your Cloudant's **Username**, **Password**, **Host**. Enter `images` as your **Database** if you have created that name of the database at the previous step. Name the Trigger "update-trigger".
 
 ![create-trigger](docs/create-trigger.png)
 
