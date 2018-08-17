@@ -59,14 +59,25 @@ Create a [**Cloudant**](https://console.bluemix.net/catalog/services/cloudant) i
 Create a [Watson Visual Recognition](https://console.bluemix.net/catalog/services/visual-recognition) instance.
 * Copy the API Key in the Credentials section and paste it in the `local.env` file in the value of `WATSON_VISUAL_APIKEY`
 
-### 3. Create Cloud Functions
+### 3. Deploy Cloud Functions
+> Choose one of the deployment methods
 
-Make sure you have the right environment variables in the `local.env` file. Export them in your terminal then deploy the Cloud Functions using `wskdeploy`:
+## Deploy through the IBM Cloud Functions console user interface
+
+Choose ["Start Creating"](https://console.bluemix.net/openwhisk/create) in the IBM Cloud Functions Dashboard. [Then proceed to this deployment instructions using the UI](README-Deploy-UI.md).
+
+You can also deploy them directly from the CLI by following the steps in the next section.
+
+## Deploy using the wskdeploy command line tool
+
+Make sure you have the right environment variables in the `local.env` file. Export them in your terminal then deploy the Cloud Functions using `wskdeploy`. This uses the `manifest.yaml` file in this root directory.
 
 ```
 $ source local.env
 $ wskdeploy
 ```
+
+> You may want to undeploy them later with `wskdeploy undeploy`
 
 ### 4. Launch Application
 
@@ -90,6 +101,66 @@ $ npm start
 # Sample output
 
 ![sample-output](docs/screenshot.png)
+
+# Alternative Deployment Methods
+
+### Deploy manually with the `ibmcloud wsk` command line tool
+
+This approach shows you how to deploy individual the packages, actions, triggers, and rules with CLI commands. It helps you understand and control the underlying deployment artifacts.
+
+* Export credentials
+```
+$ source local.env
+```
+
+* Create Cloudant Binding
+
+```
+$ ibmcloud wsk package bind /whisk.system/cloudant serverless-pattern-cloudant-package \
+-p username $CLOUDANT_USERNAME \
+-p password $CLOUDANT_PASSWORD \
+-p host ${CLOUDANT_USERNAME}.cloudant.com
+```
+
+* Create the Cloudant Trigger
+
+The trigger will listen to changes in the `images` database.
+
+```
+$ ibmcloud wsk trigger create update-trigger --feed serverless-pattern-cloudant-package/changes \
+--param dbname images
+```
+
+* Create the Action
+
+The action executes your code. The code is already configured to use the Watson SDK.
+
+```
+$ ibmcloud wsk action create update-document-with-watson actions/updateDocumentWithWatson.js \
+--kind nodejs:8 \
+--param USERNAME $CLOUDANT_USERNAME \
+--param PASSWORD $CLOUDANT_PASSWORD \
+--param DBNAME $CLOUDANT_IMAGE_DATABASE \
+--param DBNAME_PROCESSED $CLOUDANT_TAGS_DATABASE \
+--param WATSON_VR_APIKEY $WATSON_VISUAL_APIKEY
+```
+
+* Create the Rule
+
+The rule will connect invoke the action when the trigger receives an event.
+
+```
+$ ibmcloud wsk rule create update-trigger-rule update-trigger update-document-with-watson
+```
+
+* To delete them
+
+```
+$ ibmcloud wsk package delete serverless-pattern-cloudant-package
+$ ibmcloud wsk trigger delete update-trigger
+$ ibmcloud wsk action delete update-document-with-watson
+$ ibmcloud wsk rule delete update-trigger-rule
+```
 
 # Links
 
