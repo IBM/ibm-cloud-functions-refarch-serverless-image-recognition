@@ -68,7 +68,9 @@ Choose ["Start Creating"](https://console.bluemix.net/openwhisk/create) in the I
 
 You can also deploy them directly from the CLI by following the steps in the next section.
 
-## Deploy using the wskdeploy command line tool
+## Deploy using the `wskdeploy` command line tool
+
+This approach deploy the Cloud Functions with one command driven by the runtime-specific manifest file available in this repository.
 
 Make sure you have the right environment variables in the `local.env` file. Export them in your terminal then deploy the Cloud Functions using `wskdeploy`. This uses the `manifest.yaml` file in this root directory.
 
