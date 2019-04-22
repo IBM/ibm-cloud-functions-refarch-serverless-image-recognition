@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/IBM/ibm-cloud-functions-refarch-serverless-image-recognition.svg?branch=master)](https://travis-ci.com/IBM/ibm-cloud-functions-refarch-serverless-image-recognition)
+
 # Serverless Image Recognition with Cloud Functions
 
 The application demonstrates an IBM Cloud Functions (based on Apache OpenWhisk) that gets an image from the Cloudant database and classifies it through Watson Visual Recognition. The use case demonstrates how actions work with data services and execute logic in response to Cloudant events.
