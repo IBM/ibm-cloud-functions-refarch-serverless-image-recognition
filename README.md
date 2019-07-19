@@ -39,6 +39,10 @@ When the reader has completed this Code Pattern, they will understand how to:
 
 * [Whisk Deploy _(wskdeploy)_](https://github.com/apache/incubator-openwhisk-wskdeploy) is a utility to help you describe and deploy any part of the OpenWhisk programming model using a Manifest file written in YAML. You'll use it to deploy all the Cloud Function resources using a single command. You can download it from the [releases page](https://github.com/apache/incubator-openwhisk-wskdeploy/releases) and select the appropriate file for your system.
 
+```
+brew install wskdeploy
+```
+
 * Install [Node.js](https://nodejs.org/) if you want to use Electron.
 
 # Steps
@@ -62,6 +66,14 @@ Create a [Watson Visual Recognition](https://console.bluemix.net/catalog/service
 * Copy the API Key in the Credentials section and paste it in the `local.env` file in the value of `WATSON_VISUAL_APIKEY`
 
 ### 3. Deploy Cloud Functions
+
+Create 2 databases in cloudant:
+
+  1. images
+  2. tags
+
+![](docs/databases-cloudant.png)
+
 > Choose one of the deployment methods
 
 ## Deploy through the IBM Cloud Functions console user interface
@@ -101,6 +113,24 @@ $ npm start
 ```
 
 * _(or) Double-click `web/index.html`_
+
+> When using this option, we need to enable CORS - https://cloud.ibm.com/docs/services/Cloudant/api/cors.html#cors
+
+![](docs/before-cors.png)
+
+Follow the below steps to enable CORS (also listed in the link above):
+
+```
+cd web/
+
+curl -X PUT -u "<CLOUDANT_USERNAME>:<CLOUDANT_PASSWORD>" -H "Content-Type: application/json" https://<CLOUDANT_USERNAME>.cloudant.com/_api/v2/user/config/cors -T cors.json
+
+python3 -m http.server 8000
+```
+
+Open browser and enter `localhost:8000` in the address bar.
+
+![](docs/after-cors.png)
 
 # Sample output
 
